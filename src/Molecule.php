@@ -22,6 +22,16 @@ class Molecule
         return 0.5 * $this->mass * (pow($this->velocity->x, 2) + pow($this->velocity->y, 2) + pow($this->velocity->z, 2));
     }
 
+    public function potentialEnergy()
+    {
+        return 0.5 * (pow($this->position->x, 2) + pow($this->position->y, 2) + pow($this->position->z, 2));
+    }
+
+    public function totalEnergy()
+    {
+        return $this->kineticEnergy() + $this->potentialEnergy();
+    }
+
     public function momentum()
     {
         return $this->mass * sqrt(pow($this->velocity->x, 2) + pow($this->velocity->y, 2) + pow($this->velocity->z, 2));

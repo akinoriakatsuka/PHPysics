@@ -8,41 +8,41 @@ use Phpysics\Force;
 
 $cell = [];
 
-$coordinate = new Coordinate(0, 0, 0);
+$coordinate = new Coordinate(1, 0, 0);
 $velocity = new Velocity(0, 0, 0);
-$force = new Force(1, 0, 0);
+$force = new Force(0, 0, 0);
 
-$molecule = new Molecule(1, $coordinate, $velocity, $force);
+$molecule = new Molecule(100, $coordinate, $velocity, $force);
 
 $cell[] = $molecule;
 
 $t = 0;
 
-while ($t < pow(10, 5)) {
+echo 't,x,y,z' . PHP_EOL;
+
+while ($t < pow(10, 2)) {
     $molecule = &$cell[0];
-    $molecule->position->x += $molecule->velocity->x;
-    $molecule->position->y += $molecule->velocity->y;
-    $molecule->position->z += $molecule->velocity->z;
+
+    $molecule->force->x = -1 * $molecule->position->x;
+    $molecule->force->y = -1 * $molecule->position->y;
+    $molecule->force->z = -1 * $molecule->position->z;
 
     $molecule->velocity->x += $molecule->force->x / $molecule->mass;
     $molecule->velocity->y += $molecule->force->y / $molecule->mass;
     $molecule->velocity->z += $molecule->force->z / $molecule->mass;
 
-    if($t % 10000 == 0) {
-        printInfo($t, $cell);
+    $molecule->position->x += $molecule->velocity->x;
+    $molecule->position->y += $molecule->velocity->y;
+    $molecule->position->z += $molecule->velocity->z;
+    if ($t % 1 == 0) {
+        $arr = [
+            $t,
+            sprintf("%01.8f", $molecule->position->x),
+            sprintf("%01.8f", $molecule->position->y),
+            sprintf("%01.8f", $molecule->position->z),
+        ];
+        echo implode(',', $arr) . "\n";
     }
+
     $t++;
-}
-
-printInfo($t, $cell);
-
-function printInfo($t, $cell)
-{
-    echo "Time: $t\n";
-    echo "Position: " . implode(', ', [$cell[0]->position->x, $cell[0]->position->y, $cell[0]->position->z]) . "\n";
-    echo "Velocity: " . implode(', ', [$cell[0]->velocity->x, $cell[0]->velocity->y, $cell[0]->velocity->z]) . "\n";
-    echo "Force: " . implode(', ', [$cell[0]->force->x, $cell[0]->force->y, $cell[0]->force->z]) . "\n";
-    echo "Kinetic Energy: " . $cell[0]->kineticEnergy() . "\n";
-    echo "Momentum: " . $cell[0]->momentum() . "\n";
-    echo "\n";
 }
