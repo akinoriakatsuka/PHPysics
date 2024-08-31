@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/src/Molecule.php';
+require __DIR__ . '/vendor/autoload.php';
 
-use Phpysics\Molecule;
+use Phpysics\Particle;
 use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\Force;
@@ -9,10 +9,10 @@ use Phpysics\Force;
 $cell = [];
 
 $coordinate = new Coordinate(1, 0, 0);
-$velocity = new Velocity(0, 0, 0);
+$velocity = new Velocity(0, 0, 1);
 $force = new Force(0, 0, 0);
 
-$molecule = new Molecule(100, $coordinate, $velocity, $force);
+$molecule = new Particle(100, $coordinate, $velocity, $force);
 
 $cell[] = $molecule;
 
@@ -34,6 +34,7 @@ while ($t < pow(10, 2)) {
     $molecule->position->x += $molecule->velocity->x;
     $molecule->position->y += $molecule->velocity->y;
     $molecule->position->z += $molecule->velocity->z;
+
     if ($t % 1 == 0) {
         $arr = [
             $t,
