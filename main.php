@@ -19,8 +19,16 @@ $molecule = new Particle(100, $coordinate, $velocity, $force);
 
 $cell[] = $molecule;
 
+$coordinate = new Coordinate(0, 100, 0);
+$velocity = new Velocity(10, 1, 1);
+$force = new Force(0, 0, 0);
+
+$molecule = new Particle(100, $coordinate, $velocity, $force);
+
+$cell[] = $molecule;
+
 $system = new System($cell);
 
-$file = 'data.csv';
+$file = 'data.json';
 file_put_contents($file,'');
 $system->calculate(100, new FileOutput($file));

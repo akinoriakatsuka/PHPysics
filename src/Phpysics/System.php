@@ -23,34 +23,38 @@ class System
     {
         $t = 0;
 
-        $output->write("t,x,y,z\n");
+        // $output->write("t,x,y,z\n");
+        $result = [];
 
         while ($t < $steps) {
-            $molecule = &$this->cell[0];
+            foreach ($this->cell as $index => $molecule) {
 
-            $molecule->force->x = -1 * $molecule->position->x;
-            $molecule->force->y = -1 * $molecule->position->y;
-            $molecule->force->z = -1 * $molecule->position->z;
+                // 力場を外から与えるようにしたい
+                $molecule->force->x = -1 * $molecule->position->x;
+                $molecule->force->y = -1 * $molecule->position->y;
+                $molecule->force->z = -1 * $molecule->position->z;
 
-            $molecule->velocity->x += $molecule->force->x / $molecule->mass;
-            $molecule->velocity->y += $molecule->force->y / $molecule->mass;
-            $molecule->velocity->z += $molecule->force->z / $molecule->mass;
+                $molecule->velocity->x += $molecule->force->x / $molecule->mass;
+                $molecule->velocity->y += $molecule->force->y / $molecule->mass;
+                $molecule->velocity->z += $molecule->force->z / $molecule->mass;
 
-            $molecule->position->x += $molecule->velocity->x;
-            $molecule->position->y += $molecule->velocity->y;
-            $molecule->position->z += $molecule->velocity->z;
+                $molecule->position->x += $molecule->velocity->x;
+                $molecule->position->y += $molecule->velocity->y;
+                $molecule->position->z += $molecule->velocity->z;
 
-            if ($t % 1 == 0) {
-                $arr = [
-                    $t,
-                    sprintf("%01.8f", $molecule->position->x),
-                    sprintf("%01.8f", $molecule->position->y),
-                    sprintf("%01.8f", $molecule->position->z),
-                ];
-                $output->write(implode(',', $arr) . "\n");
+                if ($t % 1 == 0) {
+                    $arr = [
+                        sprintf("%01.8f", $molecule->position->x),
+                        sprintf("%01.8f", $molecule->position->y),
+                        sprintf("%01.8f", $molecule->position->z),
+                    ];
+                    $result["#$t"]["#$index"] = $arr;
+                    // $output->write(implode(',', $arr) . "\n");
+                }
             }
-
             $t++;
         }
+        var_dump($result);
+        $output->write(json_encode($result));
     }
 }
