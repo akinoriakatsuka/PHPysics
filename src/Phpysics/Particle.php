@@ -9,12 +9,12 @@ class Particle
     public $velocity;
     public $force;
 
-    public function __construct($mass, $position, $velocity, $force)
+    public function __construct($mass, $position, $velocity)
     {
         $this->mass = $mass;
         $this->position = $position;
         $this->velocity = $velocity;
-        $this->force = $force;
+        $this->force = new Force(0, 0, 0);
     }
 
     public function kineticEnergy()
