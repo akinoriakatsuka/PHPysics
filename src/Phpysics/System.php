@@ -34,6 +34,8 @@ class System
                 $molecule->velocity->x += $molecule->force->x / $molecule->mass;
                 $molecule->velocity->y += $molecule->force->y / $molecule->mass;
                 $molecule->velocity->z += $molecule->force->z / $molecule->mass;
+            }
+            foreach ($this->cell as $index => $molecule) {
 
                 $molecule->position->x += $molecule->velocity->x;
                 $molecule->position->y += $molecule->velocity->y;
@@ -46,7 +48,6 @@ class System
                         sprintf("%01.8f", $molecule->position->z),
                     ];
                     $result["#$t"]["#$index"] = $arr;
-                    // $output->write(implode(',', $arr) . "\n");
                 }
             }
             $t++;
