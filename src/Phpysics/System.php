@@ -16,23 +16,20 @@ class System
      *
      * @param  int $steps 計算するステップ数
      * @param  OutputInterface $output 出力先
+     * @param  int $interval 出力する間隔
      *
      * @return void
      */
-    public function calculate(int $steps, OutputInterface $output)
+    public function calculate(int $steps, OutputInterface $output, int $interval = 1): void
     {
         $t = 0;
 
-        // $output->write("t,x,y,z\n");
         $result = [];
 
         while ($t < $steps) {
             foreach ($this->cell as $index => $molecule) {
 
-                // 力場を外から与えるようにしたい
-                $molecule->force->x = -1 * $molecule->position->x;
-                $molecule->force->y = -1 * $molecule->position->y;
-                $molecule->force->z = -1 * $molecule->position->z;
+                $molecule->force = $this->calculateForce($this->cell, $index);
 
                 $molecule->velocity->x += $molecule->force->x / $molecule->mass;
                 $molecule->velocity->y += $molecule->force->y / $molecule->mass;
@@ -42,7 +39,7 @@ class System
                 $molecule->position->y += $molecule->velocity->y;
                 $molecule->position->z += $molecule->velocity->z;
 
-                if ($t % 1 == 0) {
+                if ($t % $interval == 0) {
                     $arr = [
                         sprintf("%01.8f", $molecule->position->x),
                         sprintf("%01.8f", $molecule->position->y),
@@ -54,7 +51,37 @@ class System
             }
             $t++;
         }
-        var_dump($result);
         $output->write(json_encode($result));
+    }
+
+    /**
+     * 分子に働く力を計算する
+     *
+     * @param  array $cell 系
+     * @param  int $index 分子のインデックス
+     *
+     * @return Force
+     */
+    public function calculateForce(array $cell, int $index): Force
+    {
+        $force = new Force(0, 0, 0);
+
+        foreach ($cell as $i => $molecule) {
+            if ($i == $index) {
+                continue;
+            }
+
+            $dx = $molecule->position->x - $cell[$index]->position->x;
+            $dy = $molecule->position->y - $cell[$index]->position->y;
+            $dz = $molecule->position->z - $cell[$index]->position->z;
+
+            $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
+
+            $force->x += $dx / $r;
+            $force->y += $dy / $r;
+            $force->z += $dz / $r;
+        }
+
+        return $force;
     }
 }
