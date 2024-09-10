@@ -14,4 +14,9 @@ class Coordinate implements Vector
         $this->y = $y;
         $this->z = $z;
     }
+
+    public function add(Coordinate $c): Coordinate
+    {
+        return new Coordinate($this->x + $c->x, $this->y + $c->y, $this->z + $c->z);
+    }
 }

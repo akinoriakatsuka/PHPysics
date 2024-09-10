@@ -31,15 +31,23 @@ class System
 
                 $molecule->force = $this->calculateForce($this->cell, $index);
 
-                $molecule->velocity->x += $molecule->force->x / $molecule->mass;
-                $molecule->velocity->y += $molecule->force->y / $molecule->mass;
-                $molecule->velocity->z += $molecule->force->z / $molecule->mass;
+                $molecule->velocity = $molecule->velocity->add(
+                    new Velocity(
+                        $molecule->force->x / $molecule->mass,
+                        $molecule->force->y / $molecule->mass,
+                        $molecule->force->z / $molecule->mass
+                    )
+                );
             }
             foreach ($this->cell as $index => $molecule) {
 
-                $molecule->position->x += $molecule->velocity->x;
-                $molecule->position->y += $molecule->velocity->y;
-                $molecule->position->z += $molecule->velocity->z;
+                $molecule->position = $molecule->position->add(
+                    new Coordinate(
+                        $molecule->velocity->x,
+                        $molecule->velocity->y,
+                        $molecule->velocity->z
+                    )
+                );
 
                 if ($t % $interval == 0) {
                     $arr = [
