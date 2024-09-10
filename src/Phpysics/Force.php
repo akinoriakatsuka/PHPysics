@@ -14,4 +14,12 @@ class Force implements Vector
         $this->y = $y;
         $this->z = $z;
     }
+
+    /**
+     * 質量と時間を受け取り、速度変化を計算する
+     */
+    public function toVelocity(int $mass, int $time): Velocity
+    {
+        return new Velocity($this->x / $mass * $time, $this->y / $mass * $time, $this->z / $mass * $time);
+    }
 }

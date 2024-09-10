@@ -29,24 +29,16 @@ class System
         while ($t < $steps) {
             foreach ($this->cell as $index => $molecule) {
 
-                $molecule->force = $this->calculateForce($this->cell, $index);
+                $molecule->force = $this->calculateForce($index);
 
                 $molecule->velocity = $molecule->velocity->add(
-                    new Velocity(
-                        $molecule->force->x / $molecule->mass,
-                        $molecule->force->y / $molecule->mass,
-                        $molecule->force->z / $molecule->mass
-                    )
+                    $molecule->force->toVelocity(mass: $molecule->mass, time: 1)
                 );
             }
             foreach ($this->cell as $index => $molecule) {
 
                 $molecule->position = $molecule->position->add(
-                    new Coordinate(
-                        $molecule->velocity->x,
-                        $molecule->velocity->y,
-                        $molecule->velocity->z
-                    )
+                    $molecule->velocity->toDistance(time: 1)
                 );
 
                 if ($t % $interval == 0) {
@@ -71,10 +63,12 @@ class System
      *
      * @return Force
      */
-    public function calculateForce(array $cell, int $index): Force
+    public function calculateForce(int $index): Force
     {
+        $cell = $this->cell;
         $force = new Force(0, 0, 0);
 
+        // 他の分子による引力を計算
         foreach ($cell as $i => $molecule) {
             if ($i == $index) {
                 continue;
