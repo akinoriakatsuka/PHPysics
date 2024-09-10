@@ -15,11 +15,15 @@ $config = [
         ['mass' => 100, 'x' => 100, 'y' => 0, 'z' => 0, 'vx' => 0, 'vy' => -1, 'vz' => 0],
         ['mass' => 100, 'x' => -100, 'y' => 0, 'z' => 0, 'vx' => 0, 'vy' => 1, 'vz' => 0],
     ],
-    // 'particles' => [
-    //     ['mass' => 100, 'x' => 100, 'y' => 0, 'z' => 0, 'vx' => 1, 'vy' => 1, 'vz' => 0],
-    //     ['mass' => 100, 'x' => 0, 'y' => 100, 'z' => 0, 'vx' => 0, 'vy' => -1, 'vz' => -1],
-    //     ['mass' => 100, 'x' => 0, 'y' => 0, 'z' => 100, 'vx' => -1, 'vy' => 0, 'vz' => 1],
-    // ],
+    'constants' => [
+        'gravitational_constant' => 1,
+        'reflection_coefficient' => 1,
+    ],
+    'boundary' => [
+        'x' => [-1000, 1000],
+        'y' => [-1000, 1000],
+        'z' => [-1000, 1000],
+    ],
 ];
 
 foreach ($config['particles'] as $p) {
@@ -29,7 +33,7 @@ foreach ($config['particles'] as $p) {
     $cell[] = $molecule;
 }
 
-$system = new System($cell);
+$system = new System($cell, $config['constants'], $config['boundary']);
 
 $file = 'data.json';
 file_put_contents($file, '');

@@ -5,10 +5,23 @@ namespace Phpysics;
 class System
 {
     public array $cell;
+    public array $boundary;
+    public array $constants;
 
-    public function __construct(array $cell)
-    {
+    readonly float $gravitational_constant;
+    readonly float $reflection_coefficient;
+
+    public function __construct(
+        array $cell,
+        array $constants,
+        array $boundary = []
+    ) {
         $this->cell = $cell;
+        // $this->constants = $constants;
+        $this->boundary = $boundary;
+
+        $this->gravitational_constant = $constants['gravitational_constant'] ?? 1;
+        $this->reflection_coefficient = $constants['reflection_coefficient'] ?? 1;
     }
 
     /**
@@ -16,11 +29,11 @@ class System
      *
      * @param  int $steps 計算するステップ数
      * @param  OutputInterface $output 出力先
-     * @param  int $interval 出力する間隔
+     * @param  int $output_interval 出力する間隔
      *
      * @return void
      */
-    public function calculate(int $steps, OutputInterface $output, int $interval = 1): void
+    public function calculate(int $steps, OutputInterface $output, int $output_interval = 1): void
     {
         $t = 0;
 
@@ -41,7 +54,7 @@ class System
                     $molecule->velocity->toDistance(time: 1)
                 );
 
-                if ($t % $interval == 0) {
+                if ($t % $output_interval == 0) {
                     $arr = [
                         sprintf("%01.8f", $molecule->position->x),
                         sprintf("%01.8f", $molecule->position->y),
@@ -80,9 +93,11 @@ class System
 
             $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
 
-            $force->x += $dx / $r;
-            $force->y += $dy / $r;
-            $force->z += $dz / $r;
+            $g = $this->gravitational_constant;
+
+            $force->x += $g * $dx / $r;
+            $force->y += $g * $dy / $r;
+            $force->z += $g * $dz / $r;
         }
 
         return $force;
