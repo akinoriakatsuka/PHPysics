@@ -2,14 +2,18 @@
 
 namespace Phpysics;
 
+use Phpysics\Coordinate;
+use Phpysics\Velocity;
+use Phpysics\Force;
+
 class Particle
 {
     public $mass;
-    public $position;
-    public $velocity;
-    public $force;
+    public Coordinate $position;
+    public Velocity $velocity;
+    public Force $force;
 
-    public function __construct($mass, $position, $velocity)
+    public function __construct($mass, Coordinate $position, Velocity $velocity)
     {
         $this->mass = $mass;
         $this->position = $position;
@@ -37,6 +41,3 @@ class Particle
         return $this->mass * sqrt(pow($this->velocity->x, 2) + pow($this->velocity->y, 2) + pow($this->velocity->z, 2));
     }
 }
-
-
-
