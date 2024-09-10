@@ -1,5 +1,6 @@
 #!/bin/zsh
 
-php main.php > data.csv
+php main.php
 
 python plot.py
+# python animate.py
