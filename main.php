@@ -10,16 +10,18 @@ use Io\FileOutput;
 
 $cell = [];
 
-$config = require __DIR__ . '/config.php';
+$config_file = $argv[1] ?? 'configs/config.php';
+
+$config = require __DIR__ . '/' . $config_file;
 
 foreach ($config['particles'] as $p) {
     $coordinate = new Coordinate($p['x'], $p['y'], $p['z']);
     $velocity = new Velocity($p['vx'], $p['vy'], $p['vz']);
-    $molecule = new Particle($p['mass'], $coordinate, $velocity);
-    $cell[] = $molecule;
+    $particle = new Particle($p['mass'], $coordinate, $velocity);
+    $particles[] = $particle;
 }
 
-$system = new System($cell, $config['constants'], $config['boundary']);
+$system = new System($particles, $config['constants'], $config['boundary']);
 
 $file = 'data.json';
 file_put_contents($file, '');
