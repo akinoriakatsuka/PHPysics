@@ -87,19 +87,35 @@ class System
                 continue;
             }
 
-            $dx = $particle->position->x - $cell[$index]->position->x;
-            $dy = $particle->position->y - $cell[$index]->position->y;
-            $dz = $particle->position->z - $cell[$index]->position->z;
+            $gravitation = $this->calculateGravitation($cell[$index], $particle, $this->gravitational_constant);
 
-            $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
-
-            $g = $this->gravitational_constant;
-
-            $force->x += $g * $particle->mass * $cell[$index]->mass * ($dx / $r) / $r / $r;
-            $force->y += $g * $particle->mass * $cell[$index]->mass * ($dy / $r) / $r / $r;
-            $force->z += $g * $particle->mass * $cell[$index]->mass * ($dz / $r) / $r / $r;
+            $force = $force->add($gravitation);
         }
 
         return $force;
+    }
+
+    /**
+     * 2体に働く引力を計算する
+     *
+     * @param  Particle $a 粒子A
+     * @param  Particle $b 粒子B
+     * @param  float $g 重力定数
+     *
+     * @return Force
+     */
+    public function calculateGravitation(Particle $a, Particle $b, float $g): Force
+    {
+        $dx = $b->position->x - $a->position->x;
+        $dy = $b->position->y - $a->position->y;
+        $dz = $b->position->z - $a->position->z;
+
+        $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
+
+        return new Force(
+            $g * $a->mass * $b->mass * ($dx / $r) / $r / $r,
+            $g * $a->mass * $b->mass * ($dy / $r) / $r / $r,
+            $g * $a->mass * $b->mass * ($dz / $r) / $r / $r
+        );
     }
 }

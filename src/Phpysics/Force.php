@@ -22,4 +22,9 @@ class Force implements Vector
     {
         return new Velocity($this->x / $mass * $time, $this->y / $mass * $time, $this->z / $mass * $time);
     }
+
+    public function add(Force $f): Force
+    {
+        return new Force($this->x + $f->x, $this->y + $f->y, $this->z + $f->z);
+    }
 }
