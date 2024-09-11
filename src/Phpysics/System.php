@@ -40,25 +40,25 @@ class System
         $result = [];
 
         while ($t < $steps) {
-            foreach ($this->cell as $index => $molecule) {
+            foreach ($this->cell as $index => $particle) {
 
-                $molecule->force = $this->calculateForce($index);
+                $particle->force = $this->calculateForce($index);
 
-                $molecule->velocity = $molecule->velocity->add(
-                    $molecule->force->toVelocity(mass: $molecule->mass, time: 1)
-                );
             }
-            foreach ($this->cell as $index => $molecule) {
+            foreach ($this->cell as $index => $particle) {
+                $particle->velocity = $particle->velocity->add(
+                    $particle->force->toVelocity(mass: $particle->mass, time: 1)
+                );
 
-                $molecule->position = $molecule->position->add(
-                    $molecule->velocity->toDistance(time: 1)
+                $particle->position = $particle->position->add(
+                    $particle->velocity->toDistance(time: 1)
                 );
 
                 if ($t % $output_interval == 0) {
                     $arr = [
-                        sprintf("%01.8f", $molecule->position->x),
-                        sprintf("%01.8f", $molecule->position->y),
-                        sprintf("%01.8f", $molecule->position->z),
+                        sprintf("%01.8f", $particle->position->x),
+                        sprintf("%01.8f", $particle->position->y),
+                        sprintf("%01.8f", $particle->position->z),
                     ];
                     $result["#$t"]["#$index"] = $arr;
                 }
@@ -82,14 +82,14 @@ class System
         $force = new Force(0, 0, 0);
 
         // 他の分子による引力を計算
-        foreach ($cell as $i => $molecule) {
+        foreach ($cell as $i => $particle) {
             if ($i == $index) {
                 continue;
             }
 
-            $dx = $molecule->position->x - $cell[$index]->position->x;
-            $dy = $molecule->position->y - $cell[$index]->position->y;
-            $dz = $molecule->position->z - $cell[$index]->position->z;
+            $dx = $particle->position->x - $cell[$index]->position->x;
+            $dy = $particle->position->y - $cell[$index]->position->y;
+            $dz = $particle->position->z - $cell[$index]->position->z;
 
             $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
 
