@@ -95,9 +95,9 @@ class System
 
             $g = $this->gravitational_constant;
 
-            $force->x += $g * $dx / $r;
-            $force->y += $g * $dy / $r;
-            $force->z += $g * $dz / $r;
+            $force->x += $g * $particle->mass * $cell[$index]->mass * ($dx / $r) / $r / $r;
+            $force->y += $g * $particle->mass * $cell[$index]->mass * ($dy / $r) / $r / $r;
+            $force->z += $g * $particle->mass * $cell[$index]->mass * ($dz / $r) / $r / $r;
         }
 
         return $force;
