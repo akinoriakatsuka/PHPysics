@@ -46,13 +46,7 @@ class System
 
             }
             foreach ($this->cell as $index => $particle) {
-                $particle->velocity = $particle->velocity->add(
-                    $particle->force->toVelocity(mass: $particle->mass, time: 1)
-                );
-
-                $particle->position = $particle->position->add(
-                    $particle->velocity->toDistance(time: 1)
-                );
+                $particle->move(time: 1);
 
                 if ($t % $output_interval == 0) {
                     $arr = [

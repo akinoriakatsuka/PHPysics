@@ -21,6 +21,17 @@ class Particle
         $this->force = new Force(0, 0, 0);
     }
 
+    public function move(int $time): void
+    {
+        $this->velocity = $this->velocity->add(
+            $this->force->toVelocity(mass: $this->mass, time: $time)
+        );
+
+        $this->position = $this->position->add(
+            $this->velocity->toDistance(time: $time)
+        );
+    }
+
     public function kineticEnergy()
     {
         return 0.5 * $this->mass * (pow($this->velocity->x, 2) + pow($this->velocity->y, 2) + pow($this->velocity->z, 2));
