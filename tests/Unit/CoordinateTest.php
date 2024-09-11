@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests;
+namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpysics\Coordinate;
 
 class CoordinateTest extends TestCase
 {
-    public function testAdd()
+    public function testAdd(): void
     {
         $c1 = new Coordinate(1, 2, 3);
         $c2 = new Coordinate(4, 5, 6);
