@@ -8,7 +8,7 @@ class Force implements Vector
     private float $y;
     private float $z;
 
-    public function __construct($x, $y, $z)
+    public function __construct(float $x, float $y, float $z)
     {
         $this->x = $x;
         $this->y = $y;
@@ -18,7 +18,7 @@ class Force implements Vector
     /**
      * 質量と時間を受け取り、速度変化を計算する
      */
-    public function toVelocity(int $mass, int $time): Velocity
+    public function toVelocity(float $mass, int $time): Velocity
     {
         return new Velocity($this->x / $mass * $time, $this->y / $mass * $time, $this->z / $mass * $time);
     }

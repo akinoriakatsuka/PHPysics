@@ -8,12 +8,12 @@ use Phpysics\Force;
 
 class Particle
 {
-    public $mass;
+    public float $mass;
     public Coordinate $position;
     public Velocity $velocity;
     public Force $force;
 
-    public function __construct($mass, Coordinate $position, Velocity $velocity)
+    public function __construct(float $mass, Coordinate $position, Velocity $velocity)
     {
         $this->mass = $mass;
         $this->position = $position;

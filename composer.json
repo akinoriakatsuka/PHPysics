@@ -1,12 +1,18 @@
 {
     "require-dev": {
-        "phpunit/phpunit": "^11.2"
+        "phpunit/phpunit": "^11.2",
+        "phpstan/phpstan": "^1.12"
     },
 
     "autoload": {
         "psr-4": {
             "Phpysics\\": "src/Phpysics",
             "Io\\": "src/Io"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
         }
     }
 }

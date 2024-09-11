@@ -10,7 +10,7 @@ class Velocity implements Vector
     private float $y;
     private float $z;
 
-    public function __construct($x, $y, $z)
+    public function __construct(float $x, float $y, float $z)
     {
         $this->x = $x;
         $this->y = $y;

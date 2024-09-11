@@ -4,5 +4,5 @@ namespace Phpysics;
 
 interface Vector
 {
-    public function __construct($x, $y, $z);
+    public function __construct(float $x, float $y, float $z);
 }
