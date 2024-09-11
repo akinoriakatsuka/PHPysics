@@ -48,11 +48,13 @@ class System
             foreach ($this->cell as $index => $particle) {
                 $particle->move(time: 1);
 
+                $position = $particle->position;
+
                 if ($t % $output_interval == 0) {
                     $arr = [
-                        sprintf("%01.8f", $particle->position->x),
-                        sprintf("%01.8f", $particle->position->y),
-                        sprintf("%01.8f", $particle->position->z),
+                        sprintf("%01.8f", $position->getX()),
+                        sprintf("%01.8f", $position->getY()),
+                        sprintf("%01.8f", $position->getZ()),
                     ];
                     $result["#$t"]["#$index"] = $arr;
                 }
@@ -100,9 +102,9 @@ class System
      */
     public function calculateGravitation(Particle $a, Particle $b, float $g): Force
     {
-        $dx = $b->position->x - $a->position->x;
-        $dy = $b->position->y - $a->position->y;
-        $dz = $b->position->z - $a->position->z;
+        $dx = $b->position->getX() - $a->position->getX();
+        $dy = $b->position->getY() - $a->position->getY();
+        $dz = $b->position->getZ() - $a->position->getZ();
 
         $r = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
 

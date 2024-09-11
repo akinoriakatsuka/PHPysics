@@ -6,9 +6,9 @@ use Phpysics\Coordinate;
 
 class Velocity implements Vector
 {
-    public $x;
-    public $y;
-    public $z;
+    private float $x;
+    private float $y;
+    private float $z;
 
     public function __construct($x, $y, $z)
     {

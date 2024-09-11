@@ -4,9 +4,9 @@ namespace Phpysics;
 
 class Coordinate implements Vector
 {
-    public $x;
-    public $y;
-    public $z;
+    private float $x;
+    private float $y;
+    private float $z;
 
     public function __construct($x, $y, $z)
     {
@@ -18,5 +18,20 @@ class Coordinate implements Vector
     public function add(Coordinate $c): Coordinate
     {
         return new Coordinate($this->x + $c->x, $this->y + $c->y, $this->z + $c->z);
+    }
+
+    public function getX(): float
+    {
+        return $this->x;
+    }
+
+    public function getY(): float
+    {
+        return $this->y;
+    }
+
+    public function getZ(): float
+    {
+        return $this->z;
     }
 }
