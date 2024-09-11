@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpysics\Coordinate;
@@ -8,9 +8,9 @@ use Phpysics\Force;
 use Phpysics\Particle;
 use Phpysics\Velocity;
 
-class SystemTest extends TestCase
+class ParticleTest extends TestCase
 {
-    public function testMove()
+    public function testMove(): void
     {
         $particle = new Particle(
             mass: 1.0,
