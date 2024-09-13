@@ -10,6 +10,7 @@ class System
 
     readonly float $gravitational_constant;
     readonly float $reflection_coefficient;
+    readonly float $gravitational_acceleration;
 
     public function __construct(
         array $cell,
@@ -20,8 +21,9 @@ class System
         // $this->constants = $constants;
         $this->boundary = $boundary;
 
-        $this->gravitational_constant = $constants['gravitational_constant'] ?? 1;
+        $this->gravitational_constant = $constants['gravitational_constant'] ?? 0;
         $this->reflection_coefficient = $constants['reflection_coefficient'] ?? 1;
+        $this->gravitational_acceleration = $constants['gravitational_acceleration'] ?? 0;
     }
 
     /**
@@ -61,13 +63,12 @@ class System
             }
             $t++;
         }
-        $output->write(json_encode($result));
+        $output->write(json_encode($result) ?: '');
     }
 
     /**
      * 分子に働く力を計算する
      *
-     * @param  array $cell 系
      * @param  int $index 分子のインデックス
      *
      * @return Force
@@ -77,16 +78,19 @@ class System
         $cell = $this->cell;
         $force = new Force(0, 0, 0);
 
-        // 他の分子による引力を計算
+        // 万有引力を計算
         foreach ($cell as $i => $particle) {
             if ($i == $index) {
                 continue;
             }
 
             $gravitation = $this->calculateGravitation($cell[$index], $particle, $this->gravitational_constant);
-
             $force = $force->add($gravitation);
         }
+
+        // 重力を計算
+        $gravity = new Force(0, 0, -$this->gravitational_acceleration * $cell[$index]->mass);
+        $force = $force->add($gravity);
 
         return $force;
     }
