@@ -1,10 +1,10 @@
 <?php
 
-// 等速直線運動のサンプル
+// 静止のサンプル
 
 $config = [
     'particles' => [
-        ['mass' => 1, 'x' => 0, 'y' => 0, 'z' => 0, 'vx' => 1, 'vy' => 0, 'vz' => 0],
+        ['mass' => 1, 'x' => 0, 'y' => 0, 'z' => 0, 'vx' => 0, 'vy' => 0, 'vz' => 0],
     ],
     'constants' => [
         // 'gravitational_constant' => 1,
