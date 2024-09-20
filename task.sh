@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-php main.php
+php main.php $1
 
 python plot.py
-# python animate.py
+python animate.py
