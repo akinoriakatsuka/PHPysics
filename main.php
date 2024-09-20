@@ -6,7 +6,7 @@ use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\System;
 
-use Io\FileOutput;
+use IO\FileOutput;
 
 $cell = [];
 

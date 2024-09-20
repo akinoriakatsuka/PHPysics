@@ -1,6 +1,6 @@
 <?php
 
-namespace Io;
+namespace IO;
 
 use Phpysics\OutputInterface;
 
