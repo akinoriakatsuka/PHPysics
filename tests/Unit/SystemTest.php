@@ -22,13 +22,13 @@ class SystemTest extends TestCase
             ),
             new Particle(
                 mass: 1.0,
-                position: new Coordinate(1, 1, 1),
+                position: new Coordinate(1, 0, 0),
                 velocity: new Velocity(0, 0, 0)
             )
         ];
 
         $constants = [
-            'gravitational_constant' => 0.0,
+            'gravitational_constant' => 0.1,
             'reflection_coefficient' => 1.0,
             'gravitational_acceleration' => 0.0,
         ];
@@ -44,13 +44,13 @@ class SystemTest extends TestCase
 
         $system->calculate(1, $output_mock);
 
-        $this->assertSame(0.0, $particles[0]->position->getX());
+        $this->assertSame(0.1, $particles[0]->position->getX());
         $this->assertSame(0.0, $particles[0]->position->getY());
         $this->assertSame(0.0, $particles[0]->position->getY());
 
-        $this->assertSame(1.0, $particles[1]->position->getX());
-        $this->assertSame(1.0, $particles[1]->position->getY());
-        $this->assertSame(1.0, $particles[1]->position->getY());
+        $this->assertSame(0.9, $particles[1]->position->getX());
+        $this->assertSame(0.0, $particles[1]->position->getY());
+        $this->assertSame(0.0, $particles[1]->position->getY());
     }
 
 }
