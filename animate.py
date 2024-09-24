@@ -31,24 +31,27 @@ x_min, x_max = min(all_x), max(all_x)
 y_min, y_max = min(all_y), max(all_y)
 z_min, z_max = min(all_z), max(all_z)
 
+# 各軸の中心を計算
+x_center = (x_min + x_max) / 2
+y_center = (y_min + y_max) / 2
+z_center = (z_min + z_max) / 2
+
+# 各軸の範囲を統一
+range_min = min(x_min, y_min, z_min)
+range_max = max(x_max, y_max, z_max)
+
 # 軸の範囲を設定
-if x_min == x_max:
-    x_min -= 1
-    x_max += 1
-if y_min == y_max:
-    y_min -= 1
-    y_max += 1
-if z_min == z_max:
-    z_min -= 1
-    z_max += 1
+if range_min == range_max:
+    range_min -= 1
+    range_max += 1
 
 # 軸ラベルと範囲を設定
 ax.set_xlabel('X axis')
 ax.set_ylabel('Y axis')
 ax.set_zlabel('Z axis')
-ax.set_xlim(x_min, x_max)
-ax.set_ylim(y_min, y_max)
-ax.set_zlim(z_min, z_max)
+ax.set_xlim(range_min - x_center, range_max - x_center)
+ax.set_ylim(range_min - y_center, range_max - y_center)
+ax.set_zlim(range_min - z_center, range_max - z_center)
 
 # アニメーションの更新関数
 def update(frame):
@@ -58,13 +61,13 @@ def update(frame):
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')
     ax.set_zlabel('Z axis')
-    ax.set_xlim(x_min, x_max)
-    ax.set_ylim(y_min, y_max)
-    ax.set_zlim(z_min, z_max)
+    ax.set_xlim(range_min - x_center, range_max - x_center)
+    ax.set_ylim(range_min - y_center, range_max - y_center)
+    ax.set_zlim(range_min - z_center, range_max - z_center)
 
     # 各粒子の位置をプロット
     for particle_id, coords in particles.items():
-        ax.scatter(coords["x"][frame], coords["y"][frame], coords["z"][frame], label=f'Particle {particle_id}')
+        ax.scatter(coords["x"][frame] - x_center, coords["y"][frame] - y_center, coords["z"][frame] - z_center, label=f'Particle {particle_id}')
 
     ax.set_title(f'Time step {frame}')
     ax.legend()
