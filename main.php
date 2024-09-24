@@ -27,7 +27,7 @@ $fixed_points = [];
 if (isset($config['fixed_points'])) {
     foreach ($config['fixed_points'] as $f) {
         $coordinate = new Coordinate($f['x'], $f['y'], $f['z']);
-        $fixed_point = new FixedPoint($p['mass'], $coordinate);
+        $fixed_point = new FixedPoint($f['mass'], $coordinate);
         $particles[] = $fixed_point;
     }
 }
