@@ -2,5 +2,6 @@ vendor/
 .vscode/
 myenv/
 data.json
+task.sh
 .phpunit.result.cache
 .phpunit.cache/

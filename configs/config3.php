@@ -4,7 +4,7 @@
 
 $config = [
     'particles' => [
-        ['mass' => 1, 'x' => 0, 'y' => 0, 'z' => 0, 'vx' => 1, 'vy' => 0, 'vz' => 50],
+        ['mass' => 1, 'x' => 0, 'y' => 0, 'z' => 0, 'vx' => 15, 'vy' => 0, 'vz' => 50],
     ],
     'constants' => [
         // 'gravitational_constant' => 1,
