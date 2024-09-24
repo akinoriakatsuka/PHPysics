@@ -31,6 +31,17 @@ x_min, x_max = min(all_x), max(all_x)
 y_min, y_max = min(all_y), max(all_y)
 z_min, z_max = min(all_z), max(all_z)
 
+# 軸の範囲を設定
+if x_min == x_max:
+    x_min -= 1
+    x_max += 1
+if y_min == y_max:
+    y_min -= 1
+    y_max += 1
+if z_min == z_max:
+    z_min -= 1
+    z_max += 1
+
 # 軸ラベルと範囲を設定
 ax.set_xlabel('X axis')
 ax.set_ylabel('Y axis')
