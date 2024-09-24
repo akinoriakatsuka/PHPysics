@@ -44,9 +44,9 @@ class System
         $result = [];
 
         while ($t < $steps) {
-            foreach ($this->cell as $index => $particle) {
+            foreach ($this->cell as $particle) {
 
-                $particle->force = $this->calculateForce($index);
+                $particle->force = $this->calculateForce($particle);
 
             }
             foreach ($this->cell as $index => $particle) {
@@ -69,38 +69,38 @@ class System
     }
 
     /**
-     * 分子に働く力を計算する
+     * 粒子に働く力を計算する
      *
-     * @param  int $index 分子のインデックス
+     * @param  Particle $particle 粒子
      *
      * @return Force
      */
-    public function calculateForce(int $index): Force
+    public function calculateForce(Particle $particle): Force
     {
         $cell = $this->cell;
         $force = new Force(0, 0, 0);
 
         // 万有引力を計算
-        foreach ($cell as $i => $particle) {
-            if ($i == $index) {
+        foreach ($cell as $target) {
+            if ($particle === $target) {
                 continue;
             }
 
-            $gravitation = $this->calculateGravitation($cell[$index], $particle, $this->gravitational_constant);
+            $gravitation = $this->calculateGravitation($particle, $target, $this->gravitational_constant);
             $force = $force->add($gravitation);
         }
 
         // 重力を計算
-        $gravity = new Force(0, 0, -$this->gravitational_acceleration * $cell[$index]->mass);
+        $gravity = new Force(0, 0, - $this->gravitational_acceleration * $particle->mass);
         $force = $force->add($gravity);
 
         // バネの力を計算
-        foreach ($cell as $i => $particle) {
-            if ($i == $index) {
+        foreach ($cell as $target) {
+            if ($target === $particle) {
                 continue;
             }
 
-            $spring = $this->calculateSpringForce($cell[$index], $particle, $this->spring_constant);
+            $spring = $this->calculateSpringForce($particle, $target, $this->spring_constant);
             $force = $force->add($spring);
         }
 
