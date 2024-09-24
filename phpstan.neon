@@ -7,3 +7,5 @@ parameters:
         - src
         - tests
         - main.php
+    ignoreErrors:
+        - identifier: missingType.iterableValue

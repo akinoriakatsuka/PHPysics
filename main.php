@@ -2,6 +2,7 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Phpysics\Particle;
+use Phpysics\FixedPoint;
 use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\System;
@@ -20,6 +21,15 @@ foreach ($config['particles'] as $p) {
     $velocity = new Velocity($p['vx'], $p['vy'], $p['vz']);
     $particle = new Particle($p['mass'], $coordinate, $velocity);
     $particles[] = $particle;
+}
+
+$fixed_points = [];
+if (isset($config['fixed_points'])) {
+    foreach ($config['fixed_points'] as $f) {
+        $coordinate = new Coordinate($f['x'], $f['y'], $f['z']);
+        $fixed_point = new FixedPoint($f['mass'], $coordinate);
+        $particles[] = $fixed_point;
+    }
 }
 
 $system = new System($particles, $config['constants'], $config['boundary']);

@@ -12,6 +12,7 @@ class System
     readonly float $reflection_coefficient;
     readonly float $gravitational_acceleration;
     readonly float $spring_constant;
+    readonly float $natural_length;
 
     public function __construct(
         array $cell,
@@ -26,6 +27,7 @@ class System
         $this->reflection_coefficient = $constants['reflection_coefficient'] ?? 1;
         $this->gravitational_acceleration = $constants['gravitational_acceleration'] ?? 0;
         $this->spring_constant = $constants['spring_constant'] ?? 0;
+        $this->natural_length = $constants['natural_length'] ?? 0;
     }
 
     /**
@@ -44,9 +46,9 @@ class System
         $result = [];
 
         while ($t < $steps) {
-            foreach ($this->cell as $index => $particle) {
+            foreach ($this->cell as $particle) {
 
-                $particle->force = $this->calculateForce($index);
+                $particle->force = $this->calculateForce($particle);
 
             }
             foreach ($this->cell as $index => $particle) {
@@ -69,38 +71,37 @@ class System
     }
 
     /**
-     * 分子に働く力を計算する
+     * 粒子に働く力を計算する
      *
-     * @param  int $index 分子のインデックス
+     * @param  Body $particle 粒子
      *
      * @return Force
      */
-    public function calculateForce(int $index): Force
+    public function calculateForce(Body $particle): Force
     {
         $cell = $this->cell;
         $force = new Force(0, 0, 0);
 
         // 万有引力を計算
-        foreach ($cell as $i => $particle) {
-            if ($i == $index) {
+        foreach ($cell as $target) {
+            if ($particle === $target) {
                 continue;
             }
 
-            $gravitation = $this->calculateGravitation($cell[$index], $particle, $this->gravitational_constant);
+            $gravitation = $this->calculateGravitation($particle, $target, $this->gravitational_constant);
             $force = $force->add($gravitation);
         }
 
         // 重力を計算
-        $gravity = new Force(0, 0, -$this->gravitational_acceleration * $cell[$index]->mass);
+        $gravity = new Force(0, 0, - $this->gravitational_acceleration * $particle->mass);
         $force = $force->add($gravity);
 
         // バネの力を計算
-        foreach ($cell as $i => $particle) {
-            if ($i == $index) {
+        foreach ($cell as $target) {
+            if ($target === $particle) {
                 continue;
             }
-
-            $spring = $this->calculateSpringForce($cell[$index], $particle, $this->spring_constant);
+            $spring = $this->calculateSpringForce($particle, $target, $this->spring_constant, $this->natural_length);
             $force = $force->add($spring);
         }
 
@@ -110,13 +111,13 @@ class System
     /**
      * 2体に働く引力を計算する
      *
-     * @param  Particle $a 粒子A
-     * @param  Particle $b 粒子B
+     * @param  Body $a 粒子A
+     * @param  Body $b 粒子B
      * @param  float $g 重力定数
      *
      * @return Force
      */
-    public function calculateGravitation(Particle $a, Particle $b, float $g): Force
+    public function calculateGravitation(Body $a, Body $b, float $g): Force
     {
         $dx = $b->position->getX() - $a->position->getX();
         $dy = $b->position->getY() - $a->position->getY();
@@ -134,22 +135,30 @@ class System
     /**
      * 2対に働くバネの力を計算する
      *
-     * @param  Particle $a 粒子A
-     * @param  Particle $b 粒子B
+     * @param  Body $a 粒子A
+     * @param  Body $b 粒子B
      * @param  float $k バネ定数
      *
      * @return Force
      */
-    private function calculateSpringForce(Particle $a, Particle $b, float $k): Force
+    private function calculateSpringForce(Body $a, Body $b, float $k, float $natural_length = 0): Force
     {
         $dx = $b->position->getX() - $a->position->getX();
         $dy = $b->position->getY() - $a->position->getY();
         $dz = $b->position->getZ() - $a->position->getZ();
 
+        $distance = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
+
+        $force_magnitude = $k * ($distance - $natural_length);
+
+        $forceX = $force_magnitude * ($dx / $distance);
+        $forceY = $force_magnitude * ($dy / $distance);
+        $forceZ = $force_magnitude * ($dz / $distance);
+
         return new Force(
-            $k * $dx,
-            $k * $dy,
-            $k * $dz
+            $forceX,
+            $forceY,
+            $forceZ
         );
     }
 }
