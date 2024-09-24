@@ -12,6 +12,7 @@ class System
     readonly float $reflection_coefficient;
     readonly float $gravitational_acceleration;
     readonly float $spring_constant;
+    readonly float $natural_length;
 
     public function __construct(
         array $cell,
@@ -26,6 +27,7 @@ class System
         $this->reflection_coefficient = $constants['reflection_coefficient'] ?? 1;
         $this->gravitational_acceleration = $constants['gravitational_acceleration'] ?? 0;
         $this->spring_constant = $constants['spring_constant'] ?? 0;
+        $this->natural_length = $constants['natural_length'] ?? 0;
     }
 
     /**
@@ -100,7 +102,7 @@ class System
                 continue;
             }
 
-            $spring = $this->calculateSpringForce($cell[$index], $particle, $this->spring_constant);
+            $spring = $this->calculateSpringForce($cell[$index], $particle, $this->spring_constant, $this->natural_length);
             $force = $force->add($spring);
         }
 
@@ -140,16 +142,24 @@ class System
      *
      * @return Force
      */
-    private function calculateSpringForce(Particle $a, Particle $b, float $k): Force
+    private function calculateSpringForce(Particle $a, Particle $b, float $k, float $natural_length = 0): Force
     {
         $dx = $b->position->getX() - $a->position->getX();
         $dy = $b->position->getY() - $a->position->getY();
         $dz = $b->position->getZ() - $a->position->getZ();
 
+        $distance = sqrt($dx * $dx + $dy * $dy + $dz * $dz);
+
+        $force_magnitude = $k * ($distance - $natural_length);
+
+        $forceX = $force_magnitude * ($dx / $distance);
+        $forceY = $force_magnitude * ($dy / $distance);
+        $forceZ = $force_magnitude * ($dz / $distance);
+
         return new Force(
-            $k * $dx,
-            $k * $dy,
-            $k * $dz
+            $forceX,
+            $forceY,
+            $forceZ
         );
     }
 }
