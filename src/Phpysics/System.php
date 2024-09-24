@@ -73,11 +73,11 @@ class System
     /**
      * 粒子に働く力を計算する
      *
-     * @param  Particle $particle 粒子
+     * @param  Body $particle 粒子
      *
      * @return Force
      */
-    public function calculateForce(Particle $particle): Force
+    public function calculateForce(Body $particle): Force
     {
         $cell = $this->cell;
         $force = new Force(0, 0, 0);
@@ -111,13 +111,13 @@ class System
     /**
      * 2体に働く引力を計算する
      *
-     * @param  Particle $a 粒子A
-     * @param  Particle $b 粒子B
+     * @param  Body $a 粒子A
+     * @param  Body $b 粒子B
      * @param  float $g 重力定数
      *
      * @return Force
      */
-    public function calculateGravitation(Particle $a, Particle $b, float $g): Force
+    public function calculateGravitation(Body $a, Body $b, float $g): Force
     {
         $dx = $b->position->getX() - $a->position->getX();
         $dy = $b->position->getY() - $a->position->getY();
@@ -135,13 +135,13 @@ class System
     /**
      * 2対に働くバネの力を計算する
      *
-     * @param  Particle $a 粒子A
-     * @param  Particle $b 粒子B
+     * @param  Body $a 粒子A
+     * @param  Body $b 粒子B
      * @param  float $k バネ定数
      *
      * @return Force
      */
-    private function calculateSpringForce(Particle $a, Particle $b, float $k, float $natural_length = 0): Force
+    private function calculateSpringForce(Body $a, Body $b, float $k, float $natural_length = 0): Force
     {
         $dx = $b->position->getX() - $a->position->getX();
         $dy = $b->position->getY() - $a->position->getY();
