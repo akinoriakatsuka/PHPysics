@@ -93,8 +93,7 @@ class SystemTest extends TestCase
                     ),
                     new FixedPoint(
                         mass: 1.0,
-                        position: new Coordinate(1, 0, 0),
-                        velocity: new Velocity(0, 0, 0)
+                        position: new Coordinate(1, 0, 0)
                     )
                 ],
                 [

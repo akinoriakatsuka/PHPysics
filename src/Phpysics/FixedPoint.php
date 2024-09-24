@@ -14,21 +14,17 @@ class FixedPoint extends Body
     public Velocity $velocity;
     public Force $force;
 
-    public function __construct(float $mass, Coordinate $position, Velocity $velocity)
+    public function __construct(float $mass, Coordinate $position)
     {
         $this->mass = $mass;
         $this->position = $position;
-        $this->velocity = $velocity;
+        $this->velocity = new Velocity(0, 0, 0);
         $this->force = new Force(0, 0, 0);
     }
 
     public function move(int $time): void
     {
-        $this->velocity = new Velocity(0, 0, 0);
-
-        $this->position = $this->position->add(
-            $this->velocity->toDistance(time: $time)
-        );
+        // do nothing
     }
 
 }
