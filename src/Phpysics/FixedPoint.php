@@ -7,7 +7,7 @@ use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\Force;
 
-class Particle implements Body
+class FixedPoint implements Body
 {
     public float $mass;
     public Coordinate $position;
@@ -24,9 +24,7 @@ class Particle implements Body
 
     public function move(int $time): void
     {
-        $this->velocity = $this->velocity->add(
-            $this->force->toVelocity(mass: $this->mass, time: $time)
-        );
+        $this->velocity = new Velocity(0, 0, 0);
 
         $this->position = $this->position->add(
             $this->velocity->toDistance(time: $time)

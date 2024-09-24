@@ -6,12 +6,18 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpysics\System;
 use Phpysics\Particle;
+use Phpysics\FixedPoint;
 use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\OutputInterface;
 
 class SystemTest extends TestCase
 {
+    /**
+     * @param Particle[] $particles
+     * @param float[] $constants
+     * @param float[] $expected
+     */
     #[DataProvider('configDataProvider')]
     public function testCalculate($particles, $constants, $expected): void
     {
@@ -77,6 +83,26 @@ class SystemTest extends TestCase
                     'gravitational_acceleration' => 9.8,
                 ],
                 [0.0, 0.0, -9.8, 1.0, 0.0, -9.8],
+            ],
+            'test3' => [
+                [
+                    new Particle(
+                        mass: 1.0,
+                        position: new Coordinate(0, 0, 0),
+                        velocity: new Velocity(0, 0, 0)
+                    ),
+                    new FixedPoint(
+                        mass: 1.0,
+                        position: new Coordinate(1, 0, 0),
+                        velocity: new Velocity(0, 0, 0)
+                    )
+                ],
+                [
+                    'gravitational_constant' => 0.0,
+                    'reflection_coefficient' => 1.0,
+                    'gravitational_acceleration' => 9.8,
+                ],
+                [0.0, 0.0, -9.8, 1.0, 0.0, 0.0],
             ],
         ];
     }
