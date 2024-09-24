@@ -2,5 +2,9 @@
 
 namespace Phpysics;
 
-interface Body {
+abstract class Body {
+    public float $mass;
+    public Coordinate $position;
+    public Velocity $velocity;
+    public Force $force;
 }

@@ -7,7 +7,7 @@ use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\Force;
 
-class FixedPoint implements Body
+class FixedPoint extends Body
 {
     public float $mass;
     public Coordinate $position;

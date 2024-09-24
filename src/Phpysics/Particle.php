@@ -7,7 +7,7 @@ use Phpysics\Coordinate;
 use Phpysics\Velocity;
 use Phpysics\Force;
 
-class Particle implements Body
+class Particle extends Body
 {
     public float $mass;
     public Coordinate $position;
