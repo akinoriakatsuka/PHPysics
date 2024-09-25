@@ -9,9 +9,6 @@ use Phpysics\System;
 
 use IO\ConsoleOutput;
 
-// $config_file = '../configs/pendulum.php';
-// $config = require __DIR__ . '/' . $config_file;
-
 if($_REQUEST['config']) {
     $config = json_decode(base64_decode($_REQUEST['config']), true);
 }

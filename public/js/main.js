@@ -10,6 +10,16 @@ let z_min = Infinity,
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('fetchData').addEventListener('click', fetchData);
+
+    // プリセット選択時にテキストエリアに設定値を入力
+    document.getElementById('preset').addEventListener('change', (event) => {
+        const selectedPreset = event.target.value;
+        if (selectedPreset) {
+            document.getElementById('config').value = selectedPreset;
+        } else {
+            document.getElementById('config').value = '';
+        }
+    });
 });
 
 function fetchData() {

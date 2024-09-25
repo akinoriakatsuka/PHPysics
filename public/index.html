@@ -11,6 +11,26 @@
   <body>
     <div class="container">
       <h1>PHPysics</h1>
+
+      <label for="preset">プリセットを選択:</label>
+      <select id="preset">
+        <option value="">選択してください</option>
+        <option value='{
+          "particles": [
+            { "mass": 1000, "x": 0, "y": 0, "z": 0, "vx": 0.5, "vy": 0, "vz": 0 }
+          ],
+          "fixed_points": [{ "mass": 1, "x": 0, "y": 0, "z": 50 }],
+          "constants": {
+            "gravitational_acceleration": 0.01,
+            "spring_constant": 1000,
+            "natural_length": 50
+          },
+          "boundary": [],
+          "steps": 1500,
+          "interval": 15
+        }'>振り子</option>
+      </select>
+
       <textarea id="config" rows="3" cols="100" placeholder="設定をjson形式で入力してください"></textarea>
       <button id="fetchData">計算</button>
       <div id="plot"></div>
