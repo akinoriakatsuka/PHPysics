@@ -9,7 +9,7 @@ let z_min = Infinity,
     z_max = -Infinity;
 
 // JSON データを読み込む
-fetch("http://localhost:8080/calc.php")
+fetch("/calc.php")
     .then((response) => response.json())
     .then((data) => {
         particles = data;
