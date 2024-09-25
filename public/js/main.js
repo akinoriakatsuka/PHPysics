@@ -8,14 +8,26 @@ let y_min = Infinity,
 let z_min = Infinity,
     z_max = -Infinity;
 
-// JSON データを読み込む
-fetch("/calc.php")
-    .then((response) => response.json())
-    .then((data) => {
-        particles = data;
-        calculateBoundsAndFrames();
-        createPlot();
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('fetchData').addEventListener('click', fetchData);
+});
+
+function fetchData() {
+    const config = document.getElementById('config').value;
+    // クエリパラメータを設定
+    const params = new URLSearchParams({
+        config: btoa(config) // base64エンコード
     });
+
+    // JSON データを読み込む
+    fetch(`/calc.php?${params.toString()}`)
+        .then((response) => response.json())
+        .then((data) => {
+            particles = data;
+            calculateBoundsAndFrames();
+            createPlot();
+        });
+}
 
 function calculateBoundsAndFrames() {
     for (let frameKey in particles) {
@@ -70,7 +82,6 @@ function createPlot() {
     }
 
     let layout = {
-        title: "Particle Animation",
         scene: {
             xaxis: { range: [x_min, x_max] },
             yaxis: { range: [y_min, y_max] },
