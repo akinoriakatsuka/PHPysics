@@ -31,12 +31,18 @@ function fetchData() {
 
     // JSON データを読み込む
     fetch(`/calc.php?${params.toString()}`)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                document.getElementById('config').classList.add('error');
+            }
+            return response.json();
+        })
         .then((data) => {
+            document.getElementById('config').classList.remove('error');
             particles = data;
             calculateBoundsAndFrames();
             createPlot();
-        });
+        })
 }
 
 function calculateBoundsAndFrames() {

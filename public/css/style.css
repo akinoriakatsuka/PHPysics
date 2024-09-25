@@ -62,6 +62,12 @@ button:hover {
     height: 400px;
 }
 
+/* エラースタイル */
+textarea.error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
 /* スマホ用のスタイル */
 @media (max-width: 600px) {
     .container {
