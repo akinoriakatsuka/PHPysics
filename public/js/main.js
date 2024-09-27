@@ -34,15 +34,37 @@ function fetchData() {
         .then((response) => {
             if (!response.ok) {
                 document.getElementById('config').classList.add('error');
+                if (response.status === 400) {
+                    return response.json().then((errorData) => {
+                        throw new Error(errorData.error || 'Network response was not ok');
+                    });
+                }
+            } else {
+                document.getElementById('config').classList.remove('error');
             }
             return response.json();
         })
         .then((data) => {
-            document.getElementById('config').classList.remove('error');
             particles = data;
             calculateBoundsAndFrames();
             createPlot();
         })
+        .catch((error) => {
+            Toastify({
+                text: error.message,
+                duration: 3000,
+                destination: "",
+                newWindow: true,
+                close: false,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                  background: "red",
+                },
+                onClick: function(){}
+              }).showToast();
+        });
 }
 
 function calculateBoundsAndFrames() {

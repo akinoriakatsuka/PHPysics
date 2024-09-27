@@ -10,26 +10,27 @@ use Phpysics\System;
 use IO\ConsoleOutput;
 
 // バリデーション
-if (!isset($_REQUEST['config'])) {
-    header('HTTP', true, 500);
+if (!isset($_REQUEST['config']) || empty($_REQUEST['config'])) {
+    header('HTTP', true, 400);
     echo json_encode(['error' => 'config is required']);
     exit;
 }
 $result = json_decode(base64_decode($_REQUEST['config']), true);
+
 if (json_last_error() !== JSON_ERROR_NONE) {
-    header('HTTP', true, 500);
+    header('HTTP', true, 400);
     echo json_encode(['error' => 'config is invalid']);
     exit;
 }
 // stepが10000を超える場合はエラー
 if (isset($result['steps']) && $result['steps'] > 10000) {
-    header('HTTP', true, 500);
+    header('HTTP', true, 400);
     echo json_encode(['error' => 'steps is too large']);
     exit;
 }
 // particleとfixed_pointsの合計が5を超える場合はエラー
 if (count($result['particles']) + count($result['fixed_points']) > 5) {
-    header('HTTP', true, 500);
+    header('HTTP', true, 400);
     echo json_encode(['error' => 'bodies are too many']);
     exit;
 }
