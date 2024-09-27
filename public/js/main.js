@@ -68,6 +68,14 @@ function fetchData() {
 }
 
 function calculateBoundsAndFrames() {
+    // 最初に座標をクリアする
+    x_min = 0;
+    x_max = 0;
+    y_min = 0;
+    y_max = 0;
+    z_min = 0;
+    z_max = 0;
+    // 各座標を計算する
     for (let frameKey in particles) {
         let frameIndex = parseInt(frameKey.replace("#", ""));
         if (frameIndex > maxFrames) {
@@ -86,7 +94,7 @@ function calculateBoundsAndFrames() {
             if (z > z_max) z_max = z;
         }
     }
-    maxFrames += 1; // フレーム数をインデックスからカウントに変換
+    maxFrames += 1;
 }
 
 function createPlot() {
