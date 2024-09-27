@@ -7,7 +7,7 @@
     "autoload": {
         "psr-4": {
             "Phpysics\\": "src/Phpysics",
-            "IO\\": "src/IO"
+            "IO\\": "src/Io"
         }
     },
     "autoload-dev": {

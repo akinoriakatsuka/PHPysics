@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PHPysics</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.3.1.min.js"></script>
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>PHPysics</h1>
+      <a href="https://github.com/akinoriakatsuka/PHPysics" target="_blank" class="github-link">
+        <img src="https://img.shields.io/github/stars/akinoriakatsuka/PHPysics?style=social" alt="GitHub stars">
+      </a>
+      <label for="preset">プリセットを選択:</label>
+      <select id="preset">
+        <option value="">選択してください</option>
+        <option value='{
+  "particles": [
+    { "mass": 1, "x": 0, "y": 0, "z": 0, "vx": 15, "vy": 0, "vz": 50 }
+  ],
+  "fixed_points": [],
+  "constants": { "gravitational_acceleration": 1 },
+  "boundary": [],
+  "steps": 100,
+  "interval": 5
+}'>放物運動</option>
+        <option value='{
+  "particles": [
+    { "mass": 1, "x": 100, "y": 0, "z": 0, "vx": 0, "vy": -10, "vz": 0 },
+    { "mass": 10000, "x": 0, "y": 0, "z": 0, "vx": 0, "vy": 0.001, "vz": 0 }
+  ],
+  "fixed_points": [],
+  "boundary": [],
+  "constants": { "gravitational_constant": 1, "reflection_coefficient": 1 },
+  "steps": 100,
+  "interval": 1
+}'>公転</option>
+        <option value='{
+  "particles": [
+    { "mass": 1000, "x": 0, "y": 0, "z": 0, "vx": 0.5, "vy": 0, "vz": 0 }
+  ],
+  "fixed_points": [{ "mass": 1, "x": 0, "y": 0, "z": 50 }],
+  "constants": {
+    "gravitational_acceleration": 0.01,
+    "spring_constant": 1000,
+    "natural_length": 50
+  },
+  "boundary": [],
+  "steps": 1500,
+  "interval": 15
+}'>振り子</option>
+      </select>
+
+      <textarea id="config" rows="3" cols="100" placeholder="設定をjson形式で入力してください"></textarea>
+      <button id="fetchData">計算</button>
+      <div id="plot"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+/* style.css */
+
+/* 全体のスタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+select,
+textarea,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+select:focus,
+textarea:focus,
+button:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#plot {
+    width: 100%;
+    height: 400px;
+}
+
+/* エラースタイル */
+textarea.error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+.github-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.github-link:hover {
+    color: #007bff;
+}
+
+/* スマホ用のスタイル */
+@media (max-width: 600px) {
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    label,
+    select,
+    textarea,
+    button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+}
