@@ -68,6 +68,19 @@ textarea.error {
     background-color: #ffe6e6;
 }
 
+.github-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.github-link:hover {
+    color: #007bff;
+}
+
 /* スマホ用のスタイル */
 @media (max-width: 600px) {
     .container {
