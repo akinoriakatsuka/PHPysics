@@ -46,6 +46,20 @@ function fetchData() {
         })
         .then((data) => {
             particles = data;
+            Toastify({
+                text: "Calculation completed successfully.",
+                duration: 3000,
+                destination: "",
+                newWindow: true,
+                close: false,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                  background: "green",
+                },
+                onClick: function(){}
+              }).showToast();
             calculateBoundsAndFrames();
             createPlot();
         })
