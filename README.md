@@ -6,4 +6,4 @@ It is implemented for the author's programming learning. So it cannot be used fo
 
 ## DEMO
 
-https://phpysics.net/
+https://phpysics.org/
